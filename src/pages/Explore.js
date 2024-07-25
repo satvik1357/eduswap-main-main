@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, getDocs, addDoc, query, where, getDoc } from 'firebase/firestore';
 import '../styles/Explore.css';
 import defaultProfileImage from '../images/default-profile.png';
-
+//hi irfan
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [profiles, setProfiles] = useState([]);
