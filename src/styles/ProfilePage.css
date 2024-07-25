@@ -1,0 +1,151 @@
+.profile-page {
+  font-family: 'Arial', sans-serif;
+  color: #e5e5e5;
+  background-color: #141414; /* Dark background similar to Netflix */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem; /* Adjusted padding to account for fixed navbar */
+  box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Navbar styling (consistent with Dashboard) */
+.navbar {
+  background-color: #000; /* Black navbar */
+  color: #e5e5e5; /* Light gray text */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  width: 100vw; /* Full viewport width */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  position: fixed; /* Fix to the top of the page */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar-brand a {
+  color: #e50914; /* Netflix red color */
+  text-decoration: none;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: #e5e5e5; /* Light gray text */
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #e50914; /* Netflix red for hover effect */
+  color: #fff; /* White text on hover */
+}
+
+/* Profile content styling */
+.profile-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 6rem 2rem 2rem; /* Added top padding to prevent overlap with navbar */
+  box-sizing: border-box;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column; /* Center items vertically */
+  align-items: center;
+  margin-bottom: 2rem;
+  color: #e5e5e5;
+}
+
+.profile-image-container {
+  margin-bottom: 1rem; /* Add margin to space out the image and text */
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #e50914; /* Red border */
+}
+
+.profile-header h1 {
+  font-size: 2rem;
+  color: #e5e5e5; /* Light gray text */
+  margin-bottom: 0.5rem;
+}
+
+.profile-header h2 {
+  font-size: 1.25rem;
+  color: #666; /* Gray text */
+}
+
+/* Profile sections styling */
+.profile-sections {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.profile-section {
+  background: #222; /* Dark gray background for cards */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 1.5rem;
+  width: calc(50% - 1rem);
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+}
+
+.profile-section h3 {
+  font-size: 1.5rem;
+  color: #e50914; /* Netflix red for headings */
+  border-bottom: 2px solid #e50914;
+  padding-bottom: 10px;
+  margin-bottom: 1rem;
+}
+
+.profile-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.profile-section li {
+  font-size: 1rem;
+  color: #ddd; /* Light gray text */
+  margin-bottom: 0.5rem;
+}
+
+.profile-section li strong {
+  color: #e50914; /* Red text for strong emphasis */
+}
+
+.profile-section li em {
+  color: #999; /* Gray text for company/emphasis */
+}
+
+.profile-section li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.profile-section p {
+  font-size: 1rem;
+  color: #ddd; /* Light gray text */
+  margin-bottom: 0.5rem;
+}
+.profile-main{
+  margin-left: 380px;
+
+}

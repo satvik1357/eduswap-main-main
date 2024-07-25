@@ -1,0 +1,65 @@
+/* General page styling */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #141414, #333); /* Dark gradient background */
+  padding: 20px;
+  text-align: center;
+}
+
+.home-page h1 {
+  margin-bottom: 20px;
+  font-size: 3rem;
+  color: #e5e5e5; /* Light gray text */
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  animation: fadeIn 2s ease-out;
+}
+
+.home-page p {
+  margin-bottom: 30px;
+  font-size: 1.25rem;
+  color: #e5e5e5; /* Light gray text */
+  font-family: 'Arial', sans-serif;
+  animation: fadeIn 2s ease-out 0.5s;
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.home-link {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #e50914; /* Netflix red */
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+  cursor: pointer;
+}
+
+.home-link:hover {
+  background-color: #c8102e; /* Darker red on hover */
+  transform: translateY(-2px);
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

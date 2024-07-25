@@ -1,0 +1,181 @@
+/* General page styling */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #141414; /* Dark background similar to Netflix */
+  color: #e5e5e5; /* Light gray text for better readability on dark background */
+}
+
+.navbar {
+  background-color: #000; /* Black navbar */
+  color: #e5e5e5; /* Light gray text */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  width: 100vw; /* Full viewport width */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  position: fixed; /* Fix to the top of the page */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+}
+
+.navbar-brand a {
+  color: #e50914; /* Netflix red color */
+  text-decoration: none;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-nav li {
+  display: inline;
+}
+
+.navbar-nav a {
+  color: #e5e5e5; /* Light gray text */
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-nav a:hover {
+  background-color: #e50914; /* Netflix red for hover effect */
+  color: #fff; /* White text on hover */
+}
+
+.navbar-notifications {
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar-notifications .faBell {
+  font-size: 1.5rem;
+  color: #e5e5e5; /* Light gray icon */
+  transition: color 0.3s ease;
+}
+
+.navbar-notifications .faBell:hover {
+  color: #e50914; /* Netflix red on hover */
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #222; /* Dark background for dropdown */
+  color: #e5e5e5; /* Light gray text */
+  border: 1px solid #333;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+  z-index: 1001; /* Ensure it stays above other content */
+}
+
+.notifications-dropdown ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.notifications-dropdown li {
+  padding: 5px;
+  border-bottom: 1px solid #444; /* Darker gray border */
+}
+
+.notifications-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.notifications-dropdown li:hover {
+  background-color: #333; /* Dark gray hover effect */
+}
+
+.dashboard-header {
+  background: #000; /* Black header background */
+  color: #e50914; /* Netflix red text */
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-bottom: 3px solid #333; /* Dark border for separation */
+  margin-top: 4rem; /* Added margin to account for fixed navbar */
+}
+
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 2rem;
+  margin-top: 2rem; /* Additional top margin for spacing */
+}
+
+.dashboard-overview,
+.dashboard-notifications {
+  background: #222; /* Dark gray background for sections */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 1.5rem;
+  width: 300px;
+  margin: 0 1rem;
+}
+
+.dashboard-overview h2,
+.dashboard-notifications h2 {
+  margin-bottom: 1rem;
+  color: #e50914; /* Netflix red for headings */
+}
+
+.dashboard-overview ul,
+.dashboard-notifications ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dashboard-overview li,
+.dashboard-notifications li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #444; /* Darker gray border */
+}
+
+.dashboard-overview li:last-child,
+.dashboard-notifications li:last-child {
+  border-bottom: none;
+}
+
+.dashboard-overview li:hover,
+.dashboard-notifications li:hover {
+  background-color: #333; /* Dark gray hover effect */
+}
+
+.image-slider {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-slider img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.image-slider img.hidden {
+  opacity: 0;
+}
+
+.image-slider img.visible {
+  opacity: 1;
+}

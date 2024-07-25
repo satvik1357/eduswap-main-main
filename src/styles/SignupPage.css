@@ -1,0 +1,63 @@
+/* src/styles/SignupPage.css */
+
+/* General form styling */
+.signup-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #141414, #333); /* Dark gradient background */
+  padding: 20px;
+  
+}
+
+.signup-page h2,h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #fff; /* White text */
+  font-family: 'Arial', sans-serif;
+}
+
+.signup-page form {
+  background-color: #333; /* Dark background for the form */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); /* Darker shadow for depth */
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.signup-page label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #fff; /* White text */
+}
+
+.signup-page input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #555; /* Slightly lighter dark border */
+  border-radius: 4px;
+  background-color: #222; /* Dark background for inputs */
+  color: #fff; /* White text in inputs */
+}
+
+.signup-page button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e50914; /* Netflix red */
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.signup-page button:hover {
+  background-color: #c8102e; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}

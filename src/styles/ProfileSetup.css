@@ -1,0 +1,118 @@
+/* src/styles/ProfileSetup.css */
+
+.profile-setup-page {
+  font-family: 'Arial', sans-serif;
+  color: #e5e5e5;
+  background-color: #141414; /* Dark background similar to Netflix */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 2rem; /* Adjusted padding to account for fixed navbar */
+  box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Navbar styling (consistent with Dashboard) */
+.navbar {
+  background-color: #000; /* Black navbar */
+  color: #e5e5e5; /* Light gray text */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  width: 100vw; /* Full viewport width */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  position: fixed; /* Fix to the top of the page */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar-brand a {
+  color: #e50914; /* Netflix red color */
+  text-decoration: none;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: #e5e5e5; /* Light gray text */
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: #e50914; /* Netflix red for hover effect */
+  color: #fff; /* White text on hover */
+}
+
+/* Profile setup form styling */
+.profile-setup {
+  width: 100%;
+  max-width: 600px;
+  padding: 6rem 2rem 2rem; /* Added top padding to prevent overlap with navbar */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.profile-setup h2 {
+  font-size: 2rem;
+  color: #e5e5e5;
+  margin-bottom: 2rem;
+}
+
+.profile-setup label {
+  display: block;
+  font-size: 1rem;
+  color: #e5e5e5;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.profile-setup input[type="text"] {
+  width: calc(100% - 2rem);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #e5e5e5;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+.profile-setup button {
+  background-color: #e50914; /* Netflix red */
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.profile-setup button:hover {
+  background-color: #ff0a16; /* Slightly lighter red */
+}
+
+.profile-setup ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.profile-setup li {
+  font-size: 1rem;
+  color: #ddd;
+  margin-bottom: 0.5rem;
+}
