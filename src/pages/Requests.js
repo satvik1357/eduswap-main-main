@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
 import '../styles/Requests.css';
 
 const Requests = () => {
@@ -18,7 +18,15 @@ const Requests = () => {
           try {
             const q = query(collection(db, 'requests'), where('receiverId', '==', currentUser.uid));
             const querySnapshot = await getDocs(q);
-            const requestsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const requestsList = [];
+            for (const docSnapshot of querySnapshot.docs) {
+              const requestData = docSnapshot.data();
+              const requesterDoc = await getDoc(doc(db, 'users', requestData.requesterId));
+              if (requesterDoc.exists()) {
+                requestData.requesterName = requesterDoc.data().name;
+              }
+              requestsList.push({ id: docSnapshot.id, ...requestData });
+            }
             setRequests(requestsList);
             setLoading(false);
           } catch (err) {
@@ -58,22 +66,27 @@ const Requests = () => {
   }
 
   return (
-    <div className="requests">
-      <h1>Incoming Requests</h1>
-      <ul>
-        {requests.map(request => (
-          <li key={request.id}>
-            <p>Requester ID: {request.requesterId}</p>
-            <p>Status: {request.status}</p>
-            {request.status === 'pending' && (
-              <div>
-                <button onClick={() => handleRequest(request.id, 'accepted')}>Accept</button>
-                <button onClick={() => handleRequest(request.id, 'rejected')}>Reject</button>
+    <div className="requests-page">
+      <div className="requests-main">
+        <div className="requests-header">
+          <h1>Incoming Requests</h1>
+        </div>
+        <ul>
+          {requests.map(request => (
+            <li key={request.id} className="request-item">
+              <div className="request-info">
+                <p>Requester Name: {request.requesterName}</p>
               </div>
-            )}
-          </li>
-        ))}
-      </ul>
+              {request.status === 'pending' && (
+                <div className="request-buttons">
+                  <button className="accept-button" onClick={() => handleRequest(request.id, 'accepted')}>Accept</button>
+                  <button className="reject-button" onClick={() => handleRequest(request.id, 'rejected')}>Reject</button>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
