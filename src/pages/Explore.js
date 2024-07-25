@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, query, where, getDoc } from 'firebase/firestore';
 import '../styles/Explore.css';
 import defaultProfileImage from '../images/default-profile.png';
 
@@ -36,6 +36,14 @@ const Explore = () => {
             setProfiles(usersList);
             setFilteredProfiles(usersList);
             setLoading(false);
+
+            // Fetch already requested profiles
+            const requestsCollection = collection(db, 'requests');
+            const requestsQuery = query(requestsCollection, where('requesterId', '==', currentUser.uid), where('status', '==', 'pending'));
+            const requestsSnapshot = await getDocs(requestsQuery);
+            const requestedProfileIds = requestsSnapshot.docs.map(doc => doc.data().receiverId);
+            setRequestedProfiles(requestedProfileIds);
+
           } catch (err) {
             console.error('Error fetching users:', err);
             setError('Failed to fetch users.');
@@ -92,6 +100,16 @@ const Explore = () => {
       return;
     }
 
+    // Check if a request already exists
+    const requestsCollection = collection(db, 'requests');
+    const requestsQuery = query(requestsCollection, where('requesterId', '==', currentUser.uid), where('receiverId', '==', profileId));
+    const requestsSnapshot = await getDocs(requestsQuery);
+
+    if (!requestsSnapshot.empty) {
+      alert('You have already sent a request to this person.');
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'requests'), {
         requesterId: currentUser.uid,
@@ -101,7 +119,7 @@ const Explore = () => {
       });
       alert('Request sent successfully!');
       setRequestedProfiles([...requestedProfiles, profileId]);
-    } catch (err){
+    } catch (err) {
       console.error('Error sending request:', err);
       setError('Failed to send request.');
     }
