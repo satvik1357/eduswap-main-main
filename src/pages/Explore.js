@@ -39,7 +39,6 @@ const Explore = () => {
 
             setProfiles(usersList);
             setFilteredProfiles(usersList);
-            setLoading(false);
 
             // Fetch already requested profiles
             const requestsCollection = collection(db, 'requests');
@@ -47,10 +46,10 @@ const Explore = () => {
             const requestsSnapshot = await getDocs(requestsQuery);
             const requestedProfileIds = requestsSnapshot.docs.map(doc => doc.data().receiverId);
             setRequestedProfiles(requestedProfileIds);
-
           } catch (err) {
             console.error('Error fetching users:', err);
             setError('Failed to fetch users.');
+          } finally {
             setLoading(false);
           }
         } else {
