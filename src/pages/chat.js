@@ -112,11 +112,16 @@ const Chat = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
-
-
     <div className="chat-page">
-            <nav className="navbar">
+      <nav className="navbar">
         <div className="navbar-brand">
           <Link to="/">EduSwap</Link>
         </div>
@@ -124,11 +129,10 @@ const Chat = () => {
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/explore">Explore</Link></li>
           <li><Link to="/profile">Profile</Link></li>
-          <li><Link to="/chat">chat</Link></li>
+          <li><Link to="/chat">Chat</Link></li>
           <li><Link to="/logout">Logout</Link></li>
         </ul>
       </nav>
-
 
       <div className="connections-list">
         <h2>Connections</h2>
@@ -137,6 +141,7 @@ const Chat = () => {
             <div
               key={index}
               onClick={() => handleSelectUser(connection)}
+              className={`connection-item ${selectedUser?.id === connection.id ? 'active' : ''}`}
             >
               {connection.name || 'Unnamed User'}
             </div>
@@ -165,6 +170,7 @@ const Chat = () => {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
                 placeholder="Type a message"
               />
               <button
