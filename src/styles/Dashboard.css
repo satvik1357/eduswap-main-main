@@ -1,34 +1,36 @@
 /* General page styling */
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #141414; /* Dark background similar to Netflix */
-  color: #e5e5e5; /* Light gray text for better readability on dark background */
 }
 
+/* Navbar Styling */
 .navbar {
-  background-color: #000; /* Black navbar */
-  color: #e5e5e5; /* Light gray text */
+  background: linear-gradient(90deg, #1e3a8a, #3b82f6); /* Gradient background */
+  color: #ffffff; /* White text */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 2rem;
+  padding: 1rem 2rem; /* Increased padding for better spacing */
   width: 100vw; /* Full viewport width */
   box-sizing: border-box; /* Include padding in element's total width and height */
   position: fixed; /* Fix to the top of the page */
   top: 0;
   left: 0;
   z-index: 1000; /* Ensure it stays above other content */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for more depth */
 }
 
 .navbar-brand a {
-  color: #e50914; /* Netflix red color */
+  color: #ffffff; /* White text */
   text-decoration: none;
   font-size: 1.75rem;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand a:hover {
+  color: #ffd700; /* Gold color on hover */
 }
 
 .navbar-nav {
@@ -42,123 +44,95 @@
 }
 
 .navbar-nav a {
-  color: #e5e5e5; /* Light gray text */
+  color: #ffffff; /* White text */
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .navbar-nav a:hover {
-  background-color: #e50914; /* Netflix red for hover effect */
-  color: #fff; /* White text on hover */
+  background-color: #ffffff; /* White background on hover */
+  color: #1e3a8a; /* Blue text on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
-.navbar-notifications {
-  position: relative;
-  cursor: pointer;
-}
-
-.navbar-notifications .faBell {
-  font-size: 1.5rem;
-  color: #e5e5e5; /* Light gray icon */
-  transition: color 0.3s ease;
-}
-
-.navbar-notifications .faBell:hover {
-  color: #e50914; /* Netflix red on hover */
-}
-
-.notifications-dropdown {
-  position: absolute;
-  top: 30px;
-  right: 0;
-  background-color: #222; /* Dark background for dropdown */
-  color: #e5e5e5; /* Light gray text */
-  border: 1px solid #333;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for depth */
-  z-index: 1001; /* Ensure it stays above other content */
-}
-
-.notifications-dropdown ul {
-  list-style-type: none;
-  padding: 10px;
-  margin: 0;
-}
-
-.notifications-dropdown li {
-  padding: 5px;
-  border-bottom: 1px solid #444; /* Darker gray border */
-}
-
-.notifications-dropdown li:last-child {
-  border-bottom: none;
-}
-
-.notifications-dropdown li:hover {
-  background-color: #333; /* Dark gray hover effect */
+/* Dashboard Styling */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text for better readability on white background */
 }
 
 .dashboard-header {
-  background: #000; /* Black header background */
-  color: #e50914; /* Netflix red text */
+  background: #ffffff; /* White header background */
+  color: #363434; /* Dark text */
   padding: 1.5rem 2rem;
   text-align: center;
-  border-bottom: 3px solid #333; /* Dark border for separation */
-  margin-top: 4rem; /* Added margin to account for fixed navbar */
+  border-bottom: 3px solid #3b82f6; /* Blue border for separation */
+  margin-top: 4rem; /* Margin to account for fixed navbar */
 }
 
 .dashboard-main {
   flex: 1;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-  margin-top: 2rem; /* Additional top margin for spacing */
+  margin-top: 2rem; /* Additional margin for spacing */
 }
 
-.dashboard-overview,
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+.dashboard-skills,
+.dashboard-image-slider,
 .dashboard-notifications {
-  background: #222; /* Dark gray background for sections */
+  background: #f0f4ff; /* Light blue background for sections */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  padding: 1.5rem;
-  width: 300px;
-  margin: 0 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  min-height: 400px; /* Increase the height */
 }
 
-.dashboard-overview h2,
+.dashboard-skills h2,
 .dashboard-notifications h2 {
   margin-bottom: 1rem;
-  color: #e50914; /* Netflix red for headings */
+  color: #1e3a8a; /* Blue for headings */
 }
 
-.dashboard-overview ul,
+.dashboard-skills ul,
 .dashboard-notifications ul {
   list-style-type: none;
   padding: 0;
 }
 
-.dashboard-overview li,
+.dashboard-skills li,
 .dashboard-notifications li {
   padding: 0.5rem;
-  border-bottom: 1px solid #444; /* Darker gray border */
+  border-bottom: 1px solid #d1e0ff; /* Lighter gray border */
 }
 
-.dashboard-overview li:last-child,
+.dashboard-skills li:last-child,
 .dashboard-notifications li:last-child {
   border-bottom: none;
 }
 
-.dashboard-overview li:hover,
+.dashboard-skills li:hover,
 .dashboard-notifications li:hover {
-  background-color: #333; /* Dark gray hover effect */
+  background-color: #d1e0ff; /* Light gray hover effect */
 }
 
 .image-slider {
   width: 100%;
-  height: 400px;
+  height: 100%; /* Adjust to full height */
   overflow: hidden;
   position: relative;
 }
@@ -178,4 +152,41 @@
 
 .image-slider img.visible {
   opacity: 1;
+}
+
+/* Footer Styling */
+.dashboard-footer {
+  background: #1e3a8a; /* Dark blue background */
+  color: #ffffff; /* White text */
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 3px solid #3b82f6; /* Blue border for separation */
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+.dashboard-footer p {
+  margin: 0.5rem 0;
+}
+
+.dashboard-footer a {
+  color: #ffffff; /* White text */
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.dashboard-footer a:hover {
+  text-decoration: underline;
+}
+
+.dashboard-footer .about-us {
+  margin-top: 1rem;
+}
+
+.dashboard-footer .about-us h2 {
+  color: #ffd700; /* Gold color for heading */
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-footer .about-us p {
+  margin: 0.5rem 0;
 }
