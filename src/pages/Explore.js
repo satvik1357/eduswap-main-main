@@ -185,7 +185,7 @@ const Explore = () => {
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/explore">Explore</Link></li>
           <li><Link to="/profile">Profile</Link></li>
-          <li><Link to="/settings">Settings</Link></li>
+          <li><Link to="/chat">chat</Link></li>
           <li><Link to="/logout">Logout</Link></li>
         </ul>
       </nav>
