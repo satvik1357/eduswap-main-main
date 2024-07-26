@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, query, where, getDocs, updateDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, updateDoc, doc, deleteDoc, getDoc } from 'firebase/firestore';
 import '../styles/Requests.css';
 
 const Requests = () => {
@@ -48,14 +48,15 @@ const Requests = () => {
     const db = getFirestore();
 
     try {
-      console.log(`Updating request ${requestId} with status ${status}`);
       const requestRef = doc(db, 'requests', requestId);
-      await updateDoc(requestRef, { status });
-      console.log(`Request ${requestId} status updated to ${status}`);
 
-      // Delete the request document after updating the status
-      await deleteDoc(requestRef);
-      console.log(`Request ${requestId} deleted`);
+      if (status === 'accepted') {
+        await updateDoc(requestRef, { status });
+        console.log(`Request ${requestId} status updated to ${status}`);
+      } else if (status === 'rejected') {
+        await deleteDoc(requestRef);
+        console.log(`Request ${requestId} deleted`);
+      }
 
       // Remove the request from the state
       setRequests(requests.filter(request => request.id !== requestId));
