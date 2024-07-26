@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 import { getFirestore, doc, getDoc, collection, query, orderBy, onSnapshot, addDoc, where, getDocs } from 'firebase/firestore';
 import '../styles/Chat.css';
 
@@ -112,7 +113,23 @@ const Chat = () => {
   };
 
   return (
+
+
     <div className="chat-page">
+            <nav className="navbar">
+        <div className="navbar-brand">
+          <Link to="/">EduSwap</Link>
+        </div>
+        <ul className="navbar-nav">
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/explore">Explore</Link></li>
+          <li><Link to="/profile">Profile</Link></li>
+          <li><Link to="/chat">chat</Link></li>
+          <li><Link to="/logout">Logout</Link></li>
+        </ul>
+      </nav>
+
+
       <div className="connections-list">
         <h2>Connections</h2>
         {connections.length > 0 ? (
