@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, query, where, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import '../styles/Explore.css';
 import defaultProfileImage from '../images/default-profile.png';
 
@@ -12,6 +12,7 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [requestedProfiles, setRequestedProfiles] = useState([]);
+  const [connectedProfiles, setConnectedProfiles] = useState([]);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -27,11 +28,10 @@ const Explore = () => {
               .map(doc => ({
                 id: doc.id,
                 ...doc.data(),
-                skills: Array.isArray(doc.data().skills) ? doc.data().skills : [], // Ensure skills is an array
+                skills: Array.isArray(doc.data().skills) ? doc.data().skills : [],
               }))
               .filter(user => user.id !== currentUser.uid);
 
-            // Assign random ratings and default images
             usersList.forEach(user => {
               user.rating = (Math.random() * (5 - 4) + 4).toFixed(1);
               user.image = defaultProfileImage;
@@ -46,6 +46,13 @@ const Explore = () => {
             const requestsSnapshot = await getDocs(requestsQuery);
             const requestedProfileIds = requestsSnapshot.docs.map(doc => doc.data().receiverId);
             setRequestedProfiles(requestedProfileIds);
+
+            // Fetch connections
+            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+            if (userDoc.exists()) {
+              const userConnections = userDoc.data().connections || [];
+              setConnectedProfiles(userConnections);
+            }
           } catch (err) {
             console.error('Error fetching users:', err);
             setError('Failed to fetch users.');
@@ -128,6 +135,38 @@ const Explore = () => {
     }
   };
 
+  const handleUnfollow = async (profileId) => {
+    const auth = getAuth();
+    const db = getFirestore();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      setError('No user is signed in.');
+      return;
+    }
+
+    try {
+      // Remove profileId from current user's connections
+      const userDocRef = doc(db, 'users', currentUser.uid);
+      await updateDoc(userDocRef, {
+        connections: arrayRemove(profileId)
+      });
+
+      // Remove currentUser's ID from the profile's connections
+      const profileDocRef = doc(db, 'users', profileId);
+      await updateDoc(profileDocRef, {
+        connections: arrayRemove(currentUser.uid)
+      });
+
+      // Update state
+      setConnectedProfiles(connectedProfiles.filter(id => id !== profileId));
+      alert('Unfollowed successfully!');
+    } catch (err) {
+      console.error('Error unfollowing:', err);
+      setError('Failed to unfollow.');
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -179,11 +218,11 @@ const Explore = () => {
             <div className="buttons">
               <button className="button view-profile" onClick={() => alert(`Showing detailed profile for ${profile.name}`)}>View Profile</button>
               <button
-                className={`button hire-now ${requestedProfiles.includes(profile.id) ? 'requested' : ''}`}
-                onClick={() => sendRequest(profile.id)}
+                className={`button hire-now ${requestedProfiles.includes(profile.id) ? 'requested' : connectedProfiles.includes(profile.id) ? 'following' : ''}`}
+                onClick={() => connectedProfiles.includes(profile.id) ? handleUnfollow(profile.id) : sendRequest(profile.id)}
                 disabled={requestedProfiles.includes(profile.id)}
               >
-                {requestedProfiles.includes(profile.id) ? 'Requested' : 'Request'}
+                {requestedProfiles.includes(profile.id) ? 'Requested' : connectedProfiles.includes(profile.id) ? 'Following' : 'Request'}
               </button>
             </div>
           </div>
