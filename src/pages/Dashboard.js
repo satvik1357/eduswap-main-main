@@ -71,7 +71,7 @@ function Dashboard() {
     <div className="dashboard">
       <nav className="navbar">
         <div className="navbar-brand">
-          <Link to="/">EduSwap</Link>
+          <Link to="/dashboard">EduSwap</Link>
         </div>
         <ul className="navbar-nav">
           <li><Link to="/dashboard">Dashboard</Link></li>
