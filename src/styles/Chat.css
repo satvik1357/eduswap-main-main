@@ -1,3 +1,69 @@
+
+.navbar {
+    background-color: #1e3a8a; /* Blue navbar */
+    color: #ffffff; /* White text */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    width: 100vw; /* Full viewport width */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    position: fixed; /* Fix to the top of the page */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow for depth */
+  }
+  
+  .navbar-brand a {
+    color: #3b82f6; /* Lighter blue color */
+    text-decoration: none;
+    font-size: 1.75rem;
+    font-weight: bold;
+  }
+  
+  .navbar-nav {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navbar-nav li {
+    display: inline;
+  }
+  
+  .navbar-nav a {
+    color: #ffffff; /* White text */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .navbar-nav a:hover {
+    background-color: #3b82f6; /* Lighter blue for hover effect */
+    color: #ffffff; /* White text on hover */
+  }
+  
+  .navbar-notifications {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .navbar-notifications .faBell {
+    font-size: 1.5rem;
+    color: #ffffff; /* White icon */
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-notifications .faBell:hover {
+    color: #3b82f6; /* Lighter blue on hover */
+  }
+
+
+
+
+
 .chat-page {
     display: flex;
     height: 100vh;
