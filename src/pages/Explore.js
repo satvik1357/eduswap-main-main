@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, getDocs, addDoc, query, where } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, query, where, getDoc } from 'firebase/firestore';
 import '../styles/Explore.css';
 import defaultProfileImage from '../images/default-profile.png';
 
@@ -12,7 +12,6 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [requestedProfiles, setRequestedProfiles] = useState([]);
-  const [acceptedProfiles, setAcceptedProfiles] = useState([]);
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -22,7 +21,6 @@ const Explore = () => {
       onAuthStateChanged(auth, async (currentUser) => {
         if (currentUser) {
           try {
-            // Fetch all profiles except the current user
             const usersCollection = collection(db, 'users');
             const usersSnapshot = await getDocs(usersCollection);
             const usersList = usersSnapshot.docs
@@ -36,29 +34,15 @@ const Explore = () => {
             });
 
             setProfiles(usersList);
+            setFilteredProfiles(usersList);
+            setLoading(false);
 
             // Fetch already requested profiles
             const requestsCollection = collection(db, 'requests');
-            const requestsQuery = query(requestsCollection, where('requesterId', '==', currentUser.uid));
+            const requestsQuery = query(requestsCollection, where('requesterId', '==', currentUser.uid), where('status', '==', 'pending'));
             const requestsSnapshot = await getDocs(requestsQuery);
-            const requestedProfileIds = requestsSnapshot.docs.map(doc => ({
-              receiverId: doc.data().receiverId,
-              status: doc.data().status
-            }));
-            const acceptedProfileIds = requestedProfileIds
-              .filter(request => request.status === 'accepted')
-              .map(request => request.receiverId);
-            const pendingProfileIds = requestedProfileIds
-              .filter(request => request.status === 'pending')
-              .map(request => request.receiverId);
-
-            setRequestedProfiles(pendingProfileIds);
-            setAcceptedProfiles(acceptedProfileIds);
-
-            // Filter out accepted profiles
-            const filteredProfilesList = usersList.filter(user => !acceptedProfileIds.includes(user.id));
-            setFilteredProfiles(filteredProfilesList);
-            setLoading(false);
+            const requestedProfileIds = requestsSnapshot.docs.map(doc => doc.data().receiverId);
+            setRequestedProfiles(requestedProfileIds);
 
           } catch (err) {
             console.error('Error fetching users:', err);
@@ -96,12 +80,11 @@ const Explore = () => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
     if (query === '') {
-      setFilteredProfiles(profiles.filter(profile => !acceptedProfiles.includes(profile.id)));
+      setFilteredProfiles(profiles);
     } else {
       const filtered = profiles.filter(profile =>
-        (profile.name.toLowerCase().includes(query) || 
-         profile.skills.some(skill => skill.toLowerCase().includes(query))) &&
-        !acceptedProfiles.includes(profile.id)  // Exclude accepted profiles
+        profile.name.toLowerCase().includes(query) ||
+        profile.skills.some(skill => skill.toLowerCase().includes(query))
       );
       setFilteredProfiles(filtered);
     }
@@ -136,7 +119,6 @@ const Explore = () => {
       });
       alert('Request sent successfully!');
       setRequestedProfiles([...requestedProfiles, profileId]);
-      setFilteredProfiles(filteredProfiles.filter(profile => profile.id !== profileId));
     } catch (err) {
       console.error('Error sending request:', err);
       setError('Failed to send request.');
