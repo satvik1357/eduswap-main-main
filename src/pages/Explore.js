@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, getDocs, addDoc, query, where, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, query, where } from 'firebase/firestore';
 import '../styles/Explore.css';
 import defaultProfileImage from '../images/default-profile.png';
-
+//djhfdff
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [profiles, setProfiles] = useState([]);
@@ -24,10 +24,14 @@ const Explore = () => {
             const usersCollection = collection(db, 'users');
             const usersSnapshot = await getDocs(usersCollection);
             const usersList = usersSnapshot.docs
-              .map(doc => ({ id: doc.id, ...doc.data() }))
+              .map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                skills: Array.isArray(doc.data().skills) ? doc.data().skills : [], // Ensure skills is an array
+              }))
               .filter(user => user.id !== currentUser.uid);
 
-            // Assign random ratings
+            // Assign random ratings and default images
             usersList.forEach(user => {
               user.rating = (Math.random() * (5 - 4) + 4).toFixed(1);
               user.image = defaultProfileImage;
