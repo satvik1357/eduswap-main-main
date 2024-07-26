@@ -11,7 +11,7 @@ import Explore from './pages/Explore';
 import ProfilePage from './pages/ProfilePage';
 import ProfileSetup from './pages/ProfileSetup';
 import Requests from './pages/Requests';
-import UserProfile from './pages/UserProfile'; // Added import for UserProfile
+import Chat from './pages/chat';
 
 function App() {
   return (
@@ -29,7 +29,8 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profilesetup" element={<ProfileSetup />} />
             <Route path="/requests" element={<Requests />} />
-            <Route path="/userprofile" element={<UserProfile />} /> {/* Added route for UserProfile */}
+            <Route path="/chat" element={<Chat />} />
+
           </Routes>
         </main>
       </div>
