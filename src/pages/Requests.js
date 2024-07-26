@@ -44,21 +44,63 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
-  const handleRequest = async (requestId, status) => {
+  const handleRequest = async (request, status) => {
     const db = getFirestore();
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      setError('No user is signed in.');
+      return;
+    }
 
     try {
-      console.log(`Updating request ${requestId} with status ${status}`);
-      const requestRef = doc(db, 'requests', requestId);
+      console.log(`Updating request ${request.id} with status ${status}`);
+      const requestRef = doc(db, 'requests', request.id);
+
+      if (status === 'accepted') {
+        // Add the requester ID to the receiver's connections
+        const receiverRef = doc(db, 'users', currentUser.uid);
+        const senderRef = doc(db, 'users', request.requesterId);
+        
+        const senderDoc = await getDoc(senderRef);
+        const receiverDoc = await getDoc(receiverRef);
+        
+        console.log('Sender Doc:', senderDoc.data());
+        console.log('Receiver Doc:', receiverDoc.data());
+        
+        if (senderDoc.exists() && receiverDoc.exists()) {
+          const senderData = senderDoc.data();
+          const receiverData = receiverDoc.data();
+          
+          const senderConnections = senderData.connections || [];
+          const receiverConnections = receiverData.connections || [];
+
+          console.log('Sender Connections:', senderConnections);
+          console.log('Receiver Connections:', receiverConnections);
+
+          if (!senderConnections.includes(currentUser.uid)) {
+            senderConnections.push(currentUser.uid);
+            await updateDoc(senderRef, { connections: senderConnections });
+          }
+
+          if (!receiverConnections.includes(request.requesterId)) {
+            receiverConnections.push(request.requesterId);
+            await updateDoc(receiverRef, { connections: receiverConnections });
+          }
+        }
+      }
+
+      // Update the request status
       await updateDoc(requestRef, { status });
-      console.log(`Request ${requestId} status updated to ${status}`);
+      console.log(`Request ${request.id} status updated to ${status}`);
 
       // Delete the request document after updating the status
       await deleteDoc(requestRef);
-      console.log(`Request ${requestId} deleted`);
+      console.log(`Request ${request.id} deleted`);
 
       // Remove the request from the state
-      setRequests(requests.filter(request => request.id !== requestId));
+      setRequests(requests.filter(r => r.id !== request.id));
     } catch (err) {
       console.error('Error updating request:', err);
       setError('Failed to update request.');
@@ -87,8 +129,8 @@ const Requests = () => {
               </div>
               {request.status === 'pending' && (
                 <div className="request-buttons">
-                  <button className="accept-button" onClick={() => handleRequest(request.id, 'accepted')}>Accept</button>
-                  <button className="reject-button" onClick={() => handleRequest(request.id, 'rejected')}>Reject</button>
+                  <button className="accept-button" onClick={() => handleRequest(request, 'accepted')}>Accept</button>
+                  <button className="reject-button" onClick={() => handleRequest(request, 'rejected')}>Reject</button>
                 </div>
               )}
             </li>
